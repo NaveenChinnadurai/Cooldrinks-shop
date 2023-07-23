@@ -1,23 +1,26 @@
 package myProjects.DrinkShop;
 import java.util.Scanner;
 public class components {
+    public static String menuList[][]={
+                                       {"Juice","Snacks"},
+                                       {"1-Tea","6-Samosa"},
+                                       {"2-Coffee","7.Bajji"},
+                                       {"3-Black tea","8-Roll"},
+                                       {"4-Lemon juice","9-Puffs"},
+                                       {"5-Chocolate juice","10-Bread Omlatte"}
+                                    };
     public static Scanner newin=new Scanner(System.in);
-    public static void displayMenu(){
-            System.out.println("*".repeat(30)+"Welcome To Cafee"+"*".repeat(30));
+
+    public static void orderSuccess(String item,int n){ //orderSuccessfull message
+        System.out.println("Yeah,Your order("+item+"["+n+"]) has been placed!\n------Please wait for 2 mins");
+        System.out.println("Thank you,...!!!\n");
+    }
+    public static void orderVerification(String item){ //Order verification message
+        System.out.println("\nYou have Selected "+item+" to Order.");
+        System.out.println("Verify your order by entering\n"+" ".repeat(20)+"1-Confirm\n"+" ".repeat(20)+"0-ReOrder");
+    }
+    public static void displayMenu(){ //display items in the menu in row and column
             System.out.println(" ".repeat(35)+"Menu,....!!");
-            String menuList[][]=new String[6][2];
-            menuList[0][0]="Juice";
-            menuList[0][1]="Snacks";
-            menuList[1][0]="1-Tea";
-            menuList[1][1]="6-Samosa";
-            menuList[2][0]="2-Coffee";
-            menuList[2][1]="7.Bajji";
-            menuList[3][0]="3-Black tea";
-            menuList[3][1]="8-Roll";
-            menuList[4][0]="4-Lemon juice";
-            menuList[4][1]="9-Puffs";
-            menuList[5][0]="5-Chocolate juice";
-            menuList[5][1]="10-Bread Omlatte";
             System.out.println(" ".repeat(20)+menuList[0][0]+" ".repeat(30-menuList[0][0].length())+menuList[0][1]+"\n");
             for (int i=1;i<menuList.length;i++) {
                 System.out.print(" ".repeat(20));
@@ -28,51 +31,44 @@ public class components {
             }
             System.out.println(" ".repeat(35)+"Enter 0 to Exit");
         }
-    public static void billProcess(String item){
-        System.out.println("You have Selected "+item+" to Order.");
-        System.out.println("confirm your order by pressing \n"+" ".repeat(20)+"1-Confirm\n"+" ".repeat(20)+"0-ReOrder");
+    public static String billProcess(String item){ //bill processing for the corresponding user input
+        orderVerification(item);
         System.out.print("Enter Here:");
         int choice=newin.nextInt();
+        int n=0;
+        String str="";
         if(choice==1) {
             System.out.print("\nEnter number of "+item+":");
-            int n=newin.nextInt();
-            System.out.println("Yeah,Your order("+item+"["+n+"]) has been placed!\n------Please wait for 2 mins");
-            System.out.println("Thank you,...!!!\n");
+            n+=newin.nextInt();
+            str+=item+"-->"+n+"\n";
+            orderSuccess(item, n);
         }else{
             System.out.println("Select According to the menu list!!");
         }
+        System.out.println(str);
+        return str;
     }
-    public static void subMenu(int num){
-        String item="";
-        if(num==1){
-            item="Roll";
-        }else{
-            item="Puffs";
-        }
-        System.out.println("You have Selected "+item+" to Order.");
-        System.out.println("confirm your order by pressing \n"+" ".repeat(20)+"1-Confirm\n"+" ".repeat(20)+"0-ReOrder");
+    public static String subMenu(String item){ //Sub menu for roll and puffs
+        orderVerification(item);
         System.out.print("Enter Here:");
         int choice=newin.nextInt();
+        String str="";
         if(choice==1) {
             do{
-                System.out.print("\n 1-Veg "+item+"\n 2-Chicken "+item+"\n 3-mushroom "+item+"\n 0-Exit\n");
-                System.out.print("Select Your favourite"+item+":");
+                System.out.print(" 1-Veg "+item+"\n 2-Chicken "+item+"\n 0-Exit\n");
+                System.out.print("Select Your favourite "+item+":");
                 int subChoice=newin.nextInt();
+                int n;
                 if(subChoice==1){
-                    System.out.print("\nEnter number of Veg"+item+":");
-                    int n=newin.nextInt();
-                    System.out.println("Yeah,Your order(Veg "+item+"["+n+"]) has been placed!\n------Please wait for 2 mins");
-                    System.out.println("Thank you,...!!!\n");
+                    System.out.print("\nEnter number of Veg "+item+":");
+                    n=newin.nextInt();
+                    str+="Veg "+item+"-->"+n+"\n";
+                    orderSuccess(item, n);
                 }else if(subChoice==2){
                     System.out.print("\nEnter number of Chicken "+item+":");
-                    int n=newin.nextInt();
-                    System.out.println("Yeah,Your order(Chicken "+item+"["+n+"]) has been placed!\n------Please wait for 2 mins");
-                    System.out.println("Thank you,...!!!\n");                
-                }else if(subChoice==3){
-                    System.out.print("\nEnter number of mushroom "+item+":");
-                    int n=newin.nextInt();
-                    System.out.println("Yeah,Your order(Mushroom "+item+"["+n+"]) has been placed!\n------Please wait for 2 mins");
-                    System.out.println("Thank you,...!!!\n");
+                    n=newin.nextInt();
+                    str+="Chicken "+item+"-->"+n+"\n";
+                    orderSuccess(item, n);
                 }else if(subChoice==0){
                     break;
                 }else{
@@ -82,5 +78,7 @@ public class components {
         }else{
             System.out.println("Select According to the menu list!!");
         }
+        System.out.println(str);
+        return str;
     }
 }
